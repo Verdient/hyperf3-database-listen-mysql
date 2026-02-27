@@ -1,0 +1,29 @@
+{
+    "name": "verdient/hyperf3-database-listen-mysql",
+    "type": "library",
+    "require": {
+        "hyperf/contract": "^3.1",
+        "hyperf/event": "^3.1",
+        "hyperf/framework": "^3.1",
+        "krowinski/php-mysql-replication": "^9.0",
+        "psr/log": "^3.0",
+        "ramsey/uuid": "^4.9",
+        "verdient/hyperf3-database-listen": "^2.0"
+    },
+    "require-dev": {
+        "swoole/ide-helper": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Verdient\\Hyperf3\\Database\\Listen\\MySQL\\": "src"
+        }
+    },
+    "extra": {
+        "hyperf": {
+            "config": "Verdient\\Hyperf3\\Database\\Listen\\MySQL\\ConfigProvider"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

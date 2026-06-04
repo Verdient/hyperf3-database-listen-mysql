@@ -13,6 +13,7 @@ use Verdient\Hyperf3\Database\Listen\Event;
 use Verdient\Hyperf3\Database\Listen\EventDispatcher;
 use Verdient\Hyperf3\Database\Listen\EventModels;
 use Verdient\Hyperf3\Database\Listen\ModelClassResolverInterface;
+use Verdient\Hyperf3\Database\Model\DefinitionManager;
 use Verdient\Hyperf3\Database\Model\ModelInterface;
 use Verdient\Hyperf3\Database\Model\Utils;
 
@@ -97,11 +98,15 @@ class EventSubscriber extends EventSubscribers
 
             $eventModels = new EventModels(Event::UPDATE, $modelClass);
 
+            $properties = DefinitionManager::get($modelClass)->properties;
+
             foreach ($event->values as $value) {
                 $model = Utils::createModelWithOriginals($modelClass, $value['before']);
 
-                foreach (Utils::deserialize($modelClass, $value['after']) as $key => $value) {
-                    $model->setAttribute($key, $value);
+                foreach (Utils::deserialize($modelClass, $value['after']) as $key => $value2) {
+                    if ($properties->has($key)) {
+                        $model->setAttribute($key, $value2);
+                    }
                 }
 
                 $eventModels->add($model);
